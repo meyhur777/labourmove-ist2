@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Labour Move Assistant — IST2
 // @namespace    IST2-Flow
-// @version      4.3
+// @version      4.4
 // @description  FCLM permission sync + Pick Workforce highlight + Excel export (SLAM=Expert, V-Returns)
 // @match        https://fclm-portal.amazon.com/utilities/employeesByPermissions*
+// @match        https://fclm-portal-dub.dub.proxy.amazon.com/utilities/employeesByPermissions*
 // @match        https://picking-console.eu.picking.aft.a2z.com/fc/IST2/pick-workforce
 // @grant        GM_addStyle
 // @grant        GM_setValue
@@ -16,7 +17,7 @@
 (function () {
   'use strict';
 
-  const IS_FCLM = location.hostname === 'fclm-portal.amazon.com';
+  const IS_FCLM = location.hostname === 'fclm-portal.amazon.com' || location.hostname === 'fclm-portal-dub.dub.proxy.amazon.com';
   const IS_WORKFORCE = location.hostname === 'picking-console.eu.picking.aft.a2z.com';
 
   const PERM_KEYS = ['PICK','WRANGLE','PACK','REBIN','NOSLAM','MANUALSLAM','GIFTPACK','STOW','RECEIVE','ICQA','SHIP','VRETURNS'];
@@ -39,7 +40,9 @@
       { key: 'VRETURNS',   processId: '1002951' },
     ];
 
-    const BASE_URL = 'https://fclm-portal.amazon.com/utilities/employeesByPermissions';
+    const BASE_URL = (location.hostname === 'fclm-portal-dub.dub.proxy.amazon.com'
+      ? 'https://fclm-portal-dub.dub.proxy.amazon.com'
+      : 'https://fclm-portal.amazon.com') + '/utilities/employeesByPermissions';
 
     GM_addStyle(`
       #lm-sync-panel {
@@ -490,7 +493,7 @@
 
   function getPickAreaFromRow(row) {
     const cells = row.querySelectorAll('td');
-    if (cells.length > 6) return cells[6].textContent.trim();
+    if (cells.length > 4) return cells[4].textContent.trim();
     return '';
   }
 
