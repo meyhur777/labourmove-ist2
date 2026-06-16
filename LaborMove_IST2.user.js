@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Labour Move Assistant — IST2
 // @namespace    IST2-Flow
-// @version      4.4
+// @version      4.5
 // @description  FCLM permission sync + Pick Workforce highlight + Excel export (SLAM=Expert, V-Returns)
 // @match        https://fclm-portal.amazon.com/utilities/employeesByPermissions*
 // @match        https://fclm-portal-dub.dub.proxy.amazon.com/utilities/employeesByPermissions*
